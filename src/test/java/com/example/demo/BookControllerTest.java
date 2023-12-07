@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -21,9 +20,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -34,16 +31,14 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(BookController.class)
 class BookControllerTest {
 
+    private final List<Book> bookList = new ArrayList<Book>();
     @Autowired
     private MockMvc controller;
-
     @MockBean
     private BookService service;
 
-    private final List<Book> bookList = new ArrayList<Book>();
-
     @BeforeEach
-    void setup(){
+    void setup() {
         bookList.add(new Book("test 1", "Maarten"));
         bookList.add(new Book("test 2", "Maarten"));
         bookList.add(new Book("test 3", "Maarten"));
@@ -54,7 +49,7 @@ class BookControllerTest {
         when(service.getAll()).thenReturn(bookList);
 
         this.controller.perform(
-                get("/"))
+                        get("/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(bookList)));
     }

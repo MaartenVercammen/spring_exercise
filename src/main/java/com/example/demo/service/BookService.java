@@ -28,7 +28,9 @@ public class BookService {
     }
 
     public Optional<Book> updateBook(long id, Book book) {
-        if (book.getId() != id) return Optional.empty();
+        if (book.getId() != id) {
+            return Optional.empty();
+        }
         return Optional.of(bookRepository.save(book));
     }
 
