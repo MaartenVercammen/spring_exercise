@@ -1,0 +1,53 @@
+###
+POST http://{{host}}/
+Content-Type: application/json
+
+{
+  "title": "my test 1",
+  "author": "dirk"
+}
+
+###
+POST http://{{host}}/
+Content-Type: application/json
+
+{
+  "title": "my test 2",
+  "author": "Maarten"
+}
+
+###
+POST http://{{host}}/
+Content-Type: application/json
+
+{
+  "title": "my test 3",
+  "author": "An"
+}
+
+
+###
+GET http://{{host}}/
+
+<> 2023-12-06T155623.200.json
+
+###
+GET http://{{host}}/1
+
+###
+PUT http://{{host}}/1
+Content-Type: application/json
+
+{
+  "title": "my test 3",
+  "author": "Mark"
+}
+
+###
+GET http://{{host}}/1
+
+###
+DELETE http://{{host}}/1
+
+###
+GET http://{{host}}/
