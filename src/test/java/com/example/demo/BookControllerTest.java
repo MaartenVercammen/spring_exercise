@@ -49,7 +49,7 @@ class BookControllerTest {
         when(service.getAll()).thenReturn(bookList);
 
         this.controller.perform(
-                        get("/"))
+                        get("/book"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(bookList)));
     }
@@ -59,7 +59,7 @@ class BookControllerTest {
         when(service.getBookById(1)).thenReturn(Optional.of(bookList.get(0)));
 
         this.controller.perform(
-                        get("/1"))
+                        get("/book/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(bookList.get(0))));
     }
@@ -69,7 +69,7 @@ class BookControllerTest {
         when(service.getBookById(1)).thenReturn(Optional.empty());
 
         this.controller.perform(
-                        get("/1"))
+                        get("/book/1"))
                 .andExpect(status().isNoContent());
     }
 
@@ -78,7 +78,7 @@ class BookControllerTest {
         when(service.createBook(any())).thenReturn(bookList.get(0));
 
         this.controller.perform(
-                        post("/")
+                        post("/book")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(bookList.get(0))))
                 .andExpect(status().isOk())
@@ -89,7 +89,7 @@ class BookControllerTest {
     void whenUpdate_ReturnUpdatedResource() throws Exception {
         when(service.updateBook(anyLong(), any())).thenReturn(Optional.of(bookList.get(0)));
         this.controller.perform(
-                        put("/0")
+                        put("/book/0")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(bookList.get(0))))
                 .andExpect(status().isOk())
@@ -100,7 +100,7 @@ class BookControllerTest {
     void whenDelete_ReturnDeletedResource() throws Exception {
         when(service.deleteBookById(anyLong())).thenReturn(Optional.of(bookList.get(0)));
         this.controller.perform(
-                        delete("/0"))
+                        delete("/book/0"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(bookList.get(0))));
     }
