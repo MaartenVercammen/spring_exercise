@@ -2,9 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Book;
 import com.example.demo.service.BookService;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("/book")
 public class BookController {
 
     @Autowired
@@ -26,18 +30,21 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Book> getBook(@PathVariable long id){
-        return bookService.getBookById(id);
+    public ResponseEntity<Book> getBook(@PathVariable long id){
+        var book = bookService.getBookById(id);
+        return book.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
     }
 
     @DeleteMapping("/{id}")
-    public Optional<Book> deleteBook(@PathVariable long id){
-        return bookService.deleteBookById(id);
+    public ResponseEntity<Book> deleteBook(@PathVariable long id){
+        var book = bookService.deleteBookById(id);
+        return book.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
-    public Optional<Book> update(@PathVariable long id, @RequestBody Book book){
-        return bookService.updateBook(id, book);
+    public ResponseEntity<Book> update(@PathVariable long id, @RequestBody Book book){
+        var outBook = bookService.updateBook(id, book);
+        return outBook.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/")
