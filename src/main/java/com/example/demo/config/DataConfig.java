@@ -6,35 +6,33 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataConfig {
-        private CarRepository carRepository;
 
-        @Autowired
-        public DataConfig(CarRepository carRepository) {
-            this.carRepository = carRepository;
-            LoadUsers();
-        }
+    private final CarRepository carRepository;
 
-        private void LoadUsers() {
-            URL fileUrl = getClass().getClassLoader().getResource("measurements.txt");
-            File file = new File(fileUrl.getFile());
-            try (Scanner scanner = new Scanner(file)) {
-                while (scanner.hasNext()) {
-                    String line = scanner.nextLine();
-                    carRepository.save(parseLineData(line));
-                }
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
+    @Autowired
+    public DataConfig(CarRepository carRepository) {
+        this.carRepository = carRepository;
+        LoadUsers();
+    }
+
+    private void LoadUsers() {
+        URL fileUrl = getClass().getClassLoader().getResource("measurements.txt");
+        File file = new File(fileUrl.getFile());
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
+                carRepository.save(parseLineData(line));
             }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
+    }
 
     public Car parseLineData(String line) {
         String[] data = line.split(" ");

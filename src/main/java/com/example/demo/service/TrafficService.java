@@ -68,7 +68,7 @@ public class TrafficService {
         return carRepository.count();
     }
 
-    public List<Car> getAllCars(){
+    public List<Car> getAllCars() {
         return carRepository.findAll();
     }
 

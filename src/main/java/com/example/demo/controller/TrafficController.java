@@ -23,41 +23,41 @@ public class TrafficController {
     }
 
     @GetMapping("/CarsPassedBefore")
-    public long carsPassedBefore(@RequestParam int hour, @RequestParam int minute){
+    public long carsPassedBefore(@RequestParam int hour, @RequestParam int minute) {
         LocalTime time = LocalTime.of(hour, minute);
         return trafficService.carsPassedBefore(time);
     }
 
     @GetMapping("/CarsPassedInMinute")
-    public long carsPassedInMinute(@RequestParam int hour, @RequestParam int minute){
+    public long carsPassedInMinute(@RequestParam int hour, @RequestParam int minute) {
         LocalTime time = LocalTime.of(hour, minute);
         return trafficService.carsPassedInMinute(time);
     }
 
     @GetMapping("/CarDensityPerMinute")
-    public double carDensityPerMinute(@RequestParam int hour, @RequestParam int minute){
+    public double carDensityPerMinute(@RequestParam int hour, @RequestParam int minute) {
         LocalTime time = LocalTime.of(hour, minute);
         return trafficService.carDensityPerMinute(time);
     }
 
     @GetMapping("/fastestCar")
-    public Car carsPassedThroughSection(){
+    public Car carsPassedThroughSection() {
         return trafficService.getFastestCar();
     }
 
     @GetMapping("/")
-    public List<Car> getAll(){
+    public List<Car> getAll() {
         return trafficService.getAllCars();
     }
 
 
     @GetMapping("/overtakes/{plate}")
-    public long getOvertakesByCar(@PathVariable String plate){
+    public long getOvertakesByCar(@PathVariable String plate) {
         return trafficService.overTakes(plate);
     }
 
     @PostMapping
-    public Car addCar(@RequestBody Car car){
+    public Car addCar(@RequestBody Car car) {
         return trafficService.createCar(car);
     }
 
