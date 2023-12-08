@@ -34,10 +34,10 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDetails createUser(@RequestBody UserDTO user){
+    public UserDetails createUser(@RequestBody UserDTO user) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().toUpperCase()));
-        UserDetails userDetails = new User(user.getUsername(),  passwordEncoder.encode(user.getPassword()), authorities);
+        UserDetails userDetails = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), authorities);
         userDetailsManager.createUser(userDetails);
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);

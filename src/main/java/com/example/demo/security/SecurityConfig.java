@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/h2-console/**").permitAll()
@@ -50,12 +50,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsManager createDetailsManager(DataSource dataSource){
-        return new JdbcUserDetailsManager(dataSource);
-    }
-    @Bean
-    public static PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsManager createDetailsManager(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
     }
 
 }
